@@ -3,12 +3,11 @@ import cvlib as cv
 from cvlib.object_detection import draw_bbox
 import cv2
 import time
-print(cv2.__version__)
 # open stream
-url='http://192.168.0.136:9090/?action=stream'
-stream = cv2.VideoCapture(url)
 
+stream = cv2.VideoCapture(0)
 
+temp=0
 # loop through frames
 while True:
     # read frame from stream 
@@ -20,10 +19,13 @@ while True:
     # apply object detection (물체 검출)
     bbox, label, conf = cv.detect_common_objects(frame)
 
-    print(bbox, label, conf)
+    print(bbox)
 
     # draw bounding box over detected objects (검출된 물체 가장자리에 바운딩 박스 그리기)
     out = draw_bbox(frame, bbox, label, conf, write_conf=True)
+
+    
+       
 
     # display output
     cv2.imshow("Real-time object detection", out)

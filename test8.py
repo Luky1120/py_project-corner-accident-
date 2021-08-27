@@ -43,7 +43,30 @@ if cap.isOpened():
 
         if not ret:
             break
+        
+        face, confidence = cv.detect_face(c)
  
+    print(face)
+    print(confidence)
+ 
+    # loop through detected faces
+    for idx, f in enumerate(face):
+        
+        (startX, startY) = f[0], f[1]
+        (endX, endY) = f[2], f[3]
+ 
+        '모자이크 효과 주기: 얼굴 부분을 줄였다가 다시 원크기로 복구시키면 모자이크처럼 됨.'
+        face_region = c[startY:endY, startX:endX]
+        
+        M = face_region.shape[0]
+        N = face_region.shape[1]
+ 
+        face_region = cv2.resize(face_region, None, fx=0.05, fy=0.05, interpolation=cv2.INTER_AREA)
+        face_region = cv2.resize(face_region, (N, M), interpolation=cv2.INTER_AREA)
+        c[startY:endY, startX:endX] = face_region
+
+
+
         a_gray = cv2.cvtColor(a, cv2.COLOR_BGR2GRAY)
         b_gray = cv2.cvtColor(b, cv2.COLOR_BGR2GRAY)
         c_gray = cv2.cvtColor(c, cv2.COLOR_BGR2GRAY)
