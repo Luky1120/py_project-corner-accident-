@@ -4,13 +4,12 @@ from cvlib.object_detection import draw_bbox
 import cv2
 # arduino_c문 import
 from arduino_c import *
-#tenserflow 다운
-import gc
 
 def open_CV(): 
-     
+    count=0 
     thresh = 25
     max_diff = 5
+    tmp = 0
     
     a, b, c = None, None, None
     
@@ -40,7 +39,6 @@ def open_CV():
 
             cv2.imshow("Real-time object detection",out)
 
-            draw = c.copy()
 
             if not ret:
                 break
@@ -62,25 +60,17 @@ def open_CV():
             diff = cv2.morphologyEx(diff, cv2.MORPH_OPEN, k)
 
             diff_cnt = cv2.countNonZero(diff)
+    
+            a = b
+            b = c
             
             cp=label.count('person') 
             cc=label.count('car') 
             cm=label.count('motorcycle')
             cb=label.count('bicycle')
-            person(diff_cnt,max_diff,cp,cc,cm,cb) 
-    
-            a = b
-            b = c
+            person(diff_cnt,max_diff,cp,cc,cm,cb)
             
             
-            bbox= None
-            label= None
-            conf= None
-            
-            print(type(c))
-                
-
-
             if cv2.waitKey(10) & 0xFF == 27 :
                 cap.release()
                 cv2.destroyAllWindows() 
