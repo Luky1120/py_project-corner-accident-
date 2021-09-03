@@ -1,0 +1,4 @@
+cvlib// 딥러닝 사용을 위한
+opencv-python// 딥러닝 사용을 위한
+pyserial //아두이노와의 통신을 위한
+tensorflow // 딥러닝 사용을 위한
